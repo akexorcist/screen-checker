@@ -76,7 +76,6 @@ jobs:
           releaseFiles: bundle/release/app-release.aab
           packageName: app.akexorcist.checkscreen
           track: production
-          changesNotSentForReview: true
 
       - name: Create GitHub Release
         env:
