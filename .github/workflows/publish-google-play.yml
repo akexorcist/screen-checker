@@ -46,10 +46,9 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build AAB with Gradle
-        run: |
-          ./gradlew :app:bundleRelease \
-            -PreleaseVersionName="${{ github.ref_name }}" \
-            -PreleaseVersionCode="${{ github.run_number }}"
+        env:
+          RELEASE_VERSION_NAME: ${{ github.ref_name }}
+        run: ./gradlew :app:bundleRelease
 
       - name: Upload AAB to artifactory
         uses: actions/upload-artifact@v4
