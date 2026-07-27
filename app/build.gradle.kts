@@ -4,9 +4,6 @@ plugins {
     id("com.android.application")
 }
 
-// GITHUB_RUN_NUMBER starts at 1 and has no relation to what's already live on the
-// Play Store; this offset keeps the release workflow's first versionCode safely
-// above the current live versionCode (217 as of 2026-07-28).
 val versionCodeOffset = 217
 val releaseVersionName: String? = System.getenv("RELEASE_VERSION_NAME")
 val releaseRunNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
