@@ -4,6 +4,19 @@ plugins {
     id("com.android.application")
 }
 
+// GITHUB_RUN_NUMBER starts at 1 and has no relation to what's already live on the
+// Play Store; this offset keeps the release workflow's first versionCode safely
+// above the current live versionCode (217 as of 2026-07-28).
+val versionCodeOffset = 217
+val releaseVersionName: String? = System.getenv("RELEASE_VERSION_NAME")
+val releaseRunNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
+
+if (releaseVersionName != null) {
+    require(Regex("""^\d+\.\d+\.\d+$""").matches(releaseVersionName)) {
+        "RELEASE_VERSION_NAME must be in X.Y.Z format, got: $releaseVersionName"
+    }
+}
+
 android {
     namespace = "app.akexorcist.checkscreen"
     compileSdk = 37
@@ -12,8 +25,8 @@ android {
         applicationId = "app.akexorcist.checkscreen"
         minSdk = 21
         targetSdk = 37
-        versionCode = (project.findProperty("releaseVersionCode") as String?)?.toInt() ?: 217
-        versionName = project.findProperty("releaseVersionName") as String? ?: "2.4.1"
+        versionCode = releaseRunNumber?.let { it.toInt() + versionCodeOffset } ?: 217
+        versionName = releaseVersionName ?: "2.4.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
