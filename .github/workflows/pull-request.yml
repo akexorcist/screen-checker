@@ -22,6 +22,11 @@ jobs:
             app:
               - '**'
               - '!.github/workflows/**'
+              - '!README.md'
+              - '!image/**'
+              - '!CLAUDE.md'
+              - '!LICENSE'
+              - '!.gitignore'
 
   compile-check:
     name: Compile Check
