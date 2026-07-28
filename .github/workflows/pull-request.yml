@@ -3,12 +3,30 @@ name: Pull Request
 on:
   pull_request:
     branches: [ "main" ]
-    paths-ignore:
-      - '.github/workflows/**'
 
 jobs:
+  changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      app: ${{ steps.filter.outputs.app }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Filter changed paths
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          predicate-quantifier: 'every'
+          filters: |
+            app:
+              - '**'
+              - '!.github/workflows/**'
+
   compile-check:
     name: Compile Check
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,6 +46,8 @@ jobs:
 
   unit-test:
     name: Unit Test
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,6 +67,8 @@ jobs:
 
   ui-test:
     name: UI Test
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
