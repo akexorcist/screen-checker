@@ -1,5 +1,5 @@
 # Android-ScreenChecker
-Screen Checker application for development information
+Screen Checker application for development information. Available on [Google Play](https://play.google.com/store/apps/details?id=app.akexorcist.checkscreen)
 
 <img src="https://github.com/akexorcist/Android-ScreenChecker/raw/main/image/image_01.jpg" alt="Screen Checker Banner" width="600"/>
 
