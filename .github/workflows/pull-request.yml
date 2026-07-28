@@ -22,6 +22,8 @@ jobs:
             app:
               - '**'
               - '!.github/workflows/**'
+              - '!README.md'
+              - '!image/**'
 
   compile-check:
     name: Compile Check
